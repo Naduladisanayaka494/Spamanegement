@@ -69,6 +69,14 @@
                       </a>
                     </li>
                     <li class="nav-item dropdown">
+                      <a href="<?php echo base_url ?>admin/?page=reports/branch" class="nav-link nav-reports-branch">
+                        <i class="nav-icon fas fa-file"></i>
+                        <p>
+                          Branch Report
+                        </p>
+                      </a>
+                    </li>
+                    <li class="nav-item dropdown">
                       <a href="<?php echo base_url ?>admin/?page=reports/expense" class="nav-link nav-reports-expense">
                         <i class="nav-icon fas fa-file-alt"></i>
                         <p>
