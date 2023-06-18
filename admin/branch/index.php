@@ -180,6 +180,7 @@
                 echo "<tr class='total-row'>";
                 echo "<td colspan='5'>Total Amount</td>";
                 echo "<td>$totalAmount</td>";
+                echo "<h2 class='text-center'>Total Amount: $totalAmount </h2>";
                 echo "<td></td>";
                 echo "</tr>";
                 echo "</tfoot>";
@@ -204,30 +205,80 @@
             window.location.href = currentUrl.href;
         }
     </script>
+<script>
+    // JavaScript code to handle remove button
+    function removeRow(adminId) {
+        if (confirm("Are you sure you want to remove this admin?")) {
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '';
 
-    <!-- JavaScript for removing a row -->
-    <script>
-        function removeRow(rowId) {
-            if (confirm('Are you sure you want to remove this row?')) {
-                const form = document.createElement('form');
-                form.method = 'post';
-                form.action = window.location.href;
+            var input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'adminId';
+            input.value = adminId;
 
-                const rowIdInput = document.createElement('input');
-                rowIdInput.type = 'hidden';
-                rowIdInput.name = 'rowId';
-                rowIdInput.value = rowId;
+            var button = document.createElement('button');
+            button.type = 'submit';
+            button.name = 'remove';
+            button.style.display = 'none';
 
-                const removeButton = document.createElement('input');
-                removeButton.type = 'hidden';
-                removeButton.name = 'remove';
+            form.appendChild(input);
+            form.appendChild(button);
 
-                form.appendChild(rowIdInput);
-                form.appendChild(removeButton);
-                document.body.appendChild(form);
-                form.submit();
-            }
+            document.body.appendChild(form);
+            button.click();
+
+            document.body.removeChild(form);
         }
-    </script>
+    }
+
+    // Attach event listeners to the remove buttons
+    var removeButtons = document.getElementsByClassName('btn-remove');
+    for (var i = 0; i < removeButtons.length; i++) {
+        removeButtons[i].addEventListener('click', function(event) {
+            event.preventDefault();
+            removeRow(this.dataset.adminId);
+        });
+    }
+
+    // JavaScript code to handle update button
+    function updateRow(adminId, firstname, lastname, dateAdded, dateUpdated) {
+        // Get the form fields
+        var updateFirstnameField = document.getElementById('updateFirstname');
+        var updateLastnameField = document.getElementById('updateLastname');
+        var updateDateAddedField = document.getElementById('updateDateAdded');
+        var updateDateUpdatedField = document.getElementById('updateDateUpdated');
+
+        // Set the field values with admin information
+        updateFirstnameField.value = firstname;
+        updateLastnameField.value = lastname;
+        updateDateAddedField.value = dateAdded;
+        updateDateUpdatedField.value = dateUpdated;
+
+        // Open the update modal
+        $('#updateAdminModal').modal('show');
+    }
+
+    // Attach event listeners to the update buttons
+    var updateButtons = document.getElementsByClassName('btn-update');
+    for (var i = 0; i < updateButtons.length; i++) {
+        updateButtons[i].addEventListener('click', function(event) {
+            event.preventDefault();
+            var adminId = this.dataset.adminId;
+            var firstname = this.parentNode.parentNode.getElementsByTagName('td')[0].innerText;
+            var lastname = this.parentNode.parentNode.getElementsByTagName('td')[1].innerText;
+            var dateAdded = this.parentNode.parentNode.getElementsByTagName('td')[5].innerText;
+            var dateUpdated = this.parentNode.parentNode.getElementsByTagName('td')[6].innerText;
+            updateRow(adminId, firstname, lastname, dateAdded, dateUpdated);
+        });
+    }
+</script>
+
+
+
+
+
+
 </body>
 </html>
